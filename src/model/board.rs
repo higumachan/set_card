@@ -1,4 +1,4 @@
-use crate::card;
+use crate::model::card;
 
 
 pub trait Board<Card: card::Card + Clone> {

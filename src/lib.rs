@@ -1,10 +1,9 @@
-mod card;
-mod board;
+pub mod model;
 
 #[cfg(test)]
 mod tests {
-    use crate::board::*;
-    use crate::card::*;
+    use crate::model::board::*;
+    use crate::model::card::*;
 
 
     #[test]
