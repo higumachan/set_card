@@ -1,4 +1,14 @@
 mod set_card {
+
+    fn triple_equal(a: u32, b: u32, c: u32) -> bool {
+        return a == b && b == c;
+    }
+
+    fn triple_not_equal(a: u32, b: u32, c: u32) -> bool {
+        return a != b && b != c && a != c;
+    }
+
+
     const NUM_CARDS:usize = 12;
 
     pub struct Board {
@@ -6,8 +16,14 @@ mod set_card {
     }
 
     impl Board {
-        pub fn try_get_cards(&self, a: u32, b: u32, c: u32) -> bool {
-            return true;
+        pub fn try_get_cards(&self, a: usize, b: usize, c: usize) -> bool {
+            let card1 = self.cards[a];
+            let card2 = self.cards[b];
+            let card3 = self.cards[c];
+
+            return (triple_equal(card1.shape, card2.shape, card3.shape) || triple_not_equal(card1.shape, card2.shape, card3.shape)) &&
+                triple_equal(card1.color, card2.color, card3.color) || triple_not_equal(card1.color, card2.color, card3.color) &&
+                triple_equal(card1.number, card2.number, card3.number) || triple_not_equal(card1.number, card2.number, card3.number)
         }
 
         pub fn set_card(&mut self, index: usize, card: Card3) {
@@ -32,6 +48,7 @@ mod set_card {
             return Card3{shape: shape, color: color, number: number}
         }
     }
+
 }
 
 
