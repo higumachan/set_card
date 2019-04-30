@@ -1,10 +1,10 @@
 use crate::card;
 
 
-pub trait Board {
+pub trait Board<Card: card::Card + Clone> {
     fn num_cards(&self) -> usize;
-    fn cards(&self, index: usize) -> &card::Card3;
-    fn cards_mut(&mut self, index: usize) -> &mut card::Card3;
+    fn cards(&self, index: usize) -> &Card;
+    fn cards_mut(&mut self, index: usize) -> &mut Card;
     fn try_get_cards(&self, a: usize, b: usize, c: usize) -> bool {
         let card1 = self.cards(a);
         let card2 = self.cards(b);
@@ -12,7 +12,7 @@ pub trait Board {
 
         return card::Card::is_correct_set(card1, card2, card3);
     }
-    fn put_card(&mut self, index: usize, card: card::Card3) {
+    fn put_card(&mut self, index: usize, card: Card) {
         self.cards_mut(index).clone_from(&card);
     }
     fn is_no_set(&self) -> bool {
@@ -30,16 +30,16 @@ pub trait Board {
     }
 }
 
-pub struct StandardBoard {
-    cards: [card::Card3; 12],
+pub struct StandardBoard<Card: card::Card> {
+    cards: [Card; 12],
 }
 
-impl Board for StandardBoard {
-    fn cards(&self, index: usize) -> &card::Card3 {
+impl<Card: card::Card + Clone> Board<Card> for StandardBoard<Card> {
+    fn cards(&self, index: usize) -> &Card {
         return &self.cards[index];
     }
 
-    fn cards_mut(&mut self, index: usize) -> &mut card::Card3 {
+    fn cards_mut(&mut self, index: usize) -> &mut Card {
         return &mut self.cards[index];
     }
     fn num_cards(&self) -> usize {
@@ -47,22 +47,23 @@ impl Board for StandardBoard {
     }
 }
 
-impl StandardBoard {
-    pub fn new() -> StandardBoard {
+impl<Card: card::Card + Default> StandardBoard<Card> {
+    pub fn new() -> StandardBoard<Card> {
         return StandardBoard { cards: Default::default() };
     }
 }
 
-pub struct MiniBoard {
-    cards: [card::Card3; 3],
+pub struct MiniBoard<Card: card::Card> {
+    cards: [Card; 3],
 }
 
-impl Board for MiniBoard {
-    fn cards(&self, index: usize) -> &card::Card3 {
+
+impl<Card: card::Card + Clone> Board<Card> for MiniBoard<Card> {
+    fn cards(&self, index: usize) -> &Card {
         return &self.cards[index];
     }
 
-    fn cards_mut(&mut self, index: usize) -> &mut card::Card3 {
+    fn cards_mut(&mut self, index: usize) -> &mut Card {
         return &mut self.cards[index];
     }
     fn num_cards(&self) -> usize {
@@ -70,8 +71,8 @@ impl Board for MiniBoard {
     }
 }
 
-impl MiniBoard {
-    pub fn new() -> MiniBoard {
+impl<Card: card::Card + Default> MiniBoard<Card> {
+    pub fn new() -> MiniBoard<Card> {
         return MiniBoard { cards: Default::default() };
     }
 }

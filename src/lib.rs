@@ -27,8 +27,28 @@ mod tests {
         board.put_card(2, Card3::new(2, 1, 0));
 
         assert_eq!(board.try_get_cards(0, 1, 2), true);
+    }
 
+    #[test]
+    fn try_get_cards4() {
+        let mut board = StandardBoard::new();
+        board.put_card(0, Card4::new(0, 0, 0, 0));
+        board.put_card(1, Card4::new(1, 0, 0, 0));
+        board.put_card(2, Card4::new(2, 0, 0, 0));
 
+        assert_eq!(board.try_get_cards(0, 1, 2), true);
+
+        board.put_card(0, Card4::new(0, 0, 0, 0));
+        board.put_card(1, Card4::new(1, 1, 0, 0));
+        board.put_card(2, Card4::new(2, 0, 0, 0));
+
+        assert_eq!(board.try_get_cards(0, 1, 2), false);
+
+        board.put_card(0, Card4::new(0, 1, 0, 0));
+        board.put_card(1, Card4::new(1, 1, 0, 0));
+        board.put_card(2, Card4::new(2, 1, 0, 0));
+
+        assert_eq!(board.try_get_cards(0, 1, 2), true);
     }
 
     #[test]
