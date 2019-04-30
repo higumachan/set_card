@@ -14,7 +14,7 @@ pub trait Board {
             set_card::triple_equal(card1.color, card2.color, card3.color) || set_card::triple_not_equal(card1.color, card2.color, card3.color) &&
             set_card::triple_equal(card1.number, card2.number, card3.number) || set_card::triple_not_equal(card1.number, card2.number, card3.number)
     }
-    fn set_card(&mut self, index: usize, card: card::Card3) {
+    fn put_card(&mut self, index: usize, card: card::Card3) {
         self.cards_mut(index).clone_from(&card);
     }
     fn is_no_set(&self) -> bool {
