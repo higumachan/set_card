@@ -1,23 +1,8 @@
-
-mod set_card {
-
-    pub fn triple_equal(a: u32, b: u32, c: u32) -> bool {
-        return a == b && b == c;
-    }
-
-    pub fn triple_not_equal(a: u32, b: u32, c: u32) -> bool {
-        return a != b && b != c && a != c;
-    }
-
-
-}
-
 mod card;
 mod board;
 
 #[cfg(test)]
 mod tests {
-    use crate::set_card::*;
     use crate::board::*;
     use crate::card::*;
 

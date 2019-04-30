@@ -1,5 +1,5 @@
 use crate::card;
-use crate::set_card;
+
 
 pub trait Board {
     fn num_cards(&self) -> usize;
@@ -10,9 +10,7 @@ pub trait Board {
         let card2 = self.cards(b);
         let card3 = self.cards(c);
 
-        return (set_card::triple_equal(card1.shape, card2.shape, card3.shape) || set_card::triple_not_equal(card1.shape, card2.shape, card3.shape)) &&
-            set_card::triple_equal(card1.color, card2.color, card3.color) || set_card::triple_not_equal(card1.color, card2.color, card3.color) &&
-            set_card::triple_equal(card1.number, card2.number, card3.number) || set_card::triple_not_equal(card1.number, card2.number, card3.number)
+        return card::Card::is_correct_set(card1, card2, card3);
     }
     fn put_card(&mut self, index: usize, card: card::Card3) {
         self.cards_mut(index).clone_from(&card);
