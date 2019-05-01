@@ -6,7 +6,7 @@ use set_card::model::board::{StandardBoard, Board};
 use set_card::model::game::Game;
 
 fn main() {
-    let mut board: StandardBoard<Card3> = StandardBoard::new();
+    let mut board: StandardBoard<Card4> = StandardBoard::new();
     let mut game = Game::new(&mut board);
 
     loop {

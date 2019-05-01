@@ -20,6 +20,33 @@ impl views::CardView for model::card::Card3 {
             _ => s.white(),
         };
 
+
+        print!("{:^4}", s);
+    }
+}
+
+impl views::CardView for model::card::Card4 {
+    fn draw(&self){
+        let s = match self.shape {
+            0 => "*",
+            1 => "%",
+            2 => "&",
+            _ => "_",
+        }.repeat((self.number + 1) as usize);
+
+        let s = match self.color {
+            0 => s.red(),
+            1 => s.blue(),
+            2 => s.green(),
+            _ => s.white(),
+        };
+        let s = match self.pattern {
+            0 => s,
+            1 => s.dimmed(),
+            2 => s.underline(),
+            _ => s,
+        };
+
         print!("{:^4}", s);
     }
 }
