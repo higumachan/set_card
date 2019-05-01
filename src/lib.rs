@@ -70,7 +70,17 @@ mod tests {
 
     #[test]
     fn game_initialize() {
-        let mut board : MiniBoard<Card3> = MiniBoard::new();
+        let mut board : StandardBoard<Card3> = StandardBoard::new();
         let mut game = Game::new(&mut board);
+
+        for i in 0..board.num_cards() {
+            for j in 0..board.num_cards() {
+                if i != j {
+                    assert_ne!(board.card(i), board.card(j));
+                }
+            }
+        }
+
+
     }
 }

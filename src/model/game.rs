@@ -4,8 +4,8 @@ use rand::{thread_rng, Rng};
 
 
 pub struct Game<'a, Card: card::Card + Clone, Board: board::Board<Card>> {
-    board: &'a mut Board,
-    bill: Vec<Card>,
+    pub board: &'a mut Board,
+    pub bill: Vec<Card>,
 }
 
 
@@ -16,6 +16,21 @@ impl<'a, Card: card::Card + Clone, Board: board::Board<Card>> Game<'a, Card, Boa
         let mut bill = Card::all();
         rng.shuffle(&mut bill);
 
+        for i in 0..board.num_cards() {
+            board.put_card(i, bill.pop().unwrap())
+        }
+
         return Game { board, bill };
+    }
+
+    pub fn try_get_cards(&mut self, a: usize, b: usize, c: usize) -> bool {
+        if !self.board.try_get_cards(a, b, c) {
+            return false;
+        }
+        self.board.put_card(a, self.bill.pop().unwrap());
+        self.board.put_card(b, self.bill.pop().unwrap());
+        self.board.put_card(c, self.bill.pop().unwrap());
+
+        return true;
     }
 }

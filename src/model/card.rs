@@ -3,14 +3,14 @@ pub trait Card where Self: Sized {
     fn all() -> Vec<Self>;
 }
 
-#[derive(Default, Copy, Clone)]
+#[derive(Default, Copy, Clone, Debug, PartialEq)]
 pub struct Card3 {
     pub shape: u32,
     pub color: u32,
     pub number: u32,
 }
 
-#[derive(Default, Copy, Clone)]
+#[derive(Default, Copy, Clone, Debug, PartialEq)]
 pub struct Card4 {
     pub shape: u32,
     pub color: u32,
@@ -27,10 +27,10 @@ impl Card for Card3 {
 
     fn all() -> Vec<Self> {
         let mut v = Vec::new();
-        for color in 0..2 {
-            for shape in 0..2 {
-                for number in 0..2 {
-                    v.push(Self::new(color, shape, number))
+        for color in 0..3 {
+            for shape in 0..3 {
+                for number in 0..3 {
+                    v.push(Self::new(shape, color, number))
                 }
             }
         }
@@ -57,10 +57,12 @@ impl Card for Card4 {
 
     fn all() -> Vec<Self> {
         let mut v = Vec::new();
-        for color in 0..2 {
-            for shape in 0..2 {
-                for number in 0..2 {
-                    v.push(Self::new(color, shape, number, color))
+        for color in 0..3 {
+            for shape in 0..3 {
+                for number in 0..3 {
+                    for pattern in 0..3 {
+                        v.push(Self::new(shape, color, number, pattern))
+                    }
                 }
             }
         }
