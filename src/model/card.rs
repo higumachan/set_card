@@ -1,5 +1,6 @@
-pub trait Card {
+pub trait Card where Self: Sized {
     fn is_correct_set(card1: &Self, card2: &Self, card3: &Self) -> bool;
+    fn all() -> Vec<Self>;
 }
 
 #[derive(Default, Copy, Clone)]
@@ -23,6 +24,19 @@ impl Card for Card3 {
             triple_equal(card1.color, card2.color, card3.color) || triple_not_equal(card1.color, card2.color, card3.color) &&
             triple_equal(card1.number, card2.number, card3.number) || triple_not_equal(card1.number, card2.number, card3.number);
     }
+
+    fn all() -> Vec<Self> {
+        let mut v = Vec::new();
+        for color in 0..2 {
+            for shape in 0..2 {
+                for number in 0..2 {
+                    v.push(Self::new(color, shape, number))
+                }
+            }
+        }
+
+        return v;
+    }
 }
 
 impl Card3 {
@@ -39,6 +53,19 @@ impl Card for Card4 {
             triple_equal(card1.number, card2.number, card3.number) || triple_not_equal(card1.number, card2.number, card3.number) &&
             triple_equal(card1.pattern, card2.pattern, card3.pattern) || triple_not_equal(card1.pattern, card2.pattern, card3.pattern)
         ;
+    }
+
+    fn all() -> Vec<Self> {
+        let mut v = Vec::new();
+        for color in 0..2 {
+            for shape in 0..2 {
+                for number in 0..2 {
+                    v.push(Self::new(color, shape, number, color))
+                }
+            }
+        }
+
+        return v;
     }
 }
 

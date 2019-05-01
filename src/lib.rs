@@ -5,6 +5,7 @@ pub mod view;
 mod tests {
     use crate::model::board::*;
     use crate::model::card::*;
+    use crate::model::game::*;
 
 
     #[test]
@@ -65,5 +66,11 @@ mod tests {
         board.put_card(2, Card3::new(2, 1, 0));
 
         assert_eq!(board.is_no_set(), false);
+    }
+
+    #[test]
+    fn game_initialize() {
+        let mut board : MiniBoard<Card3> = MiniBoard::new();
+        let mut game = Game::new(&mut board);
     }
 }
