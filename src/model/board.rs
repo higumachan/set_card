@@ -3,12 +3,12 @@ use crate::model::card;
 
 pub trait Board<Card: card::Card + Clone> {
     fn num_cards(&self) -> usize;
-    fn cards(&self, index: usize) -> &Card;
+    fn card(&self, index: usize) -> &Card;
     fn cards_mut(&mut self, index: usize) -> &mut Card;
     fn try_get_cards(&self, a: usize, b: usize, c: usize) -> bool {
-        let card1 = self.cards(a);
-        let card2 = self.cards(b);
-        let card3 = self.cards(c);
+        let card1 = self.card(a);
+        let card2 = self.card(b);
+        let card3 = self.card(c);
 
         return card::Card::is_correct_set(card1, card2, card3);
     }
@@ -35,7 +35,7 @@ pub struct StandardBoard<Card: card::Card> {
 }
 
 impl<Card: card::Card + Clone> Board<Card> for StandardBoard<Card> {
-    fn cards(&self, index: usize) -> &Card {
+    fn card(&self, index: usize) -> &Card {
         return &self.cards[index];
     }
 
@@ -59,7 +59,7 @@ pub struct MiniBoard<Card: card::Card> {
 
 
 impl<Card: card::Card + Clone> Board<Card> for MiniBoard<Card> {
-    fn cards(&self, index: usize) -> &Card {
+    fn card(&self, index: usize) -> &Card {
         return &self.cards[index];
     }
 
