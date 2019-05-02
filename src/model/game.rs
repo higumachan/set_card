@@ -20,7 +20,7 @@ impl<'a, Card: card::Card + Clone, Board: board::Board<Card>> Game<'a, Card, Boa
             board.put_card(i, bill.pop().unwrap())
         }
 
-        return Game { board, bill };
+        Game { board, bill }
     }
 
     pub fn try_get_cards(&mut self, a: usize, b: usize, c: usize) -> bool {
@@ -31,6 +31,6 @@ impl<'a, Card: card::Card + Clone, Board: board::Board<Card>> Game<'a, Card, Boa
         self.board.put_card(b, self.bill.pop().unwrap());
         self.board.put_card(c, self.bill.pop().unwrap());
 
-        return true;
+        true
     }
 }

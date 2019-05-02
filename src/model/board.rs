@@ -10,7 +10,7 @@ pub trait Board<Card: card::Card + Clone> {
         let card2 = self.card(b);
         let card3 = self.card(c);
 
-        return card::Card::is_correct_set(card1, card2, card3);
+        card::Card::is_correct_set(card1, card2, card3)
     }
     fn put_card(&mut self, index: usize, card: Card) {
         self.cards_mut(index).clone_from(&card);
@@ -26,7 +26,7 @@ pub trait Board<Card: card::Card + Clone> {
                 }
             }
         }
-        return true;
+        true
     }
 }
 
@@ -36,20 +36,20 @@ pub struct StandardBoard<Card: card::Card> {
 
 impl<Card: card::Card + Clone> Board<Card> for StandardBoard<Card> {
     fn card(&self, index: usize) -> &Card {
-        return &self.cards[index];
+        &self.cards[index]
     }
 
     fn cards_mut(&mut self, index: usize) -> &mut Card {
-        return &mut self.cards[index];
+        &mut self.cards[index]
     }
     fn num_cards(&self) -> usize {
-        return self.cards.len();
+        self.cards.len()
     }
 }
 
 impl<Card: card::Card + Default> StandardBoard<Card> {
     pub fn new() -> StandardBoard<Card> {
-        return StandardBoard { cards: Default::default() };
+        StandardBoard { cards: Default::default() }
     }
 }
 
@@ -60,19 +60,19 @@ pub struct MiniBoard<Card: card::Card> {
 
 impl<Card: card::Card + Clone> Board<Card> for MiniBoard<Card> {
     fn card(&self, index: usize) -> &Card {
-        return &self.cards[index];
+        &self.cards[index]
     }
 
     fn cards_mut(&mut self, index: usize) -> &mut Card {
-        return &mut self.cards[index];
+        &mut self.cards[index]
     }
     fn num_cards(&self) -> usize {
-        return self.cards.len();
+        self.cards.len()
     }
 }
 
 impl<Card: card::Card + Default> MiniBoard<Card> {
     pub fn new() -> MiniBoard<Card> {
-        return MiniBoard { cards: Default::default() };
+        MiniBoard { cards: Default::default() }
     }
 }

@@ -19,7 +19,7 @@ fn main() {
         let numbers: Vec<&str> = buf.split_ascii_whitespace().collect();
 
         let numbers: Vec<usize> = numbers.into_iter().map(|x| {
-            return x.trim().parse().unwrap();
+            x.trim().parse().unwrap()
         }).collect();
 
         if numbers.len() != 3 {
