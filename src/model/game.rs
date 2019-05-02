@@ -1,7 +1,33 @@
 use crate::model::board;
 use crate::model::card;
 use rand::{thread_rng, Rng};
+use std::error;
+use std::fmt;
 
+
+#[derive(Debug)]
+pub enum TryGetCardsError {
+    BillEmpty,
+    CanNotGetCard,
+}
+
+impl fmt::Display for TryGetCardsError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            TryGetCardsError::BillEmpty => write!(f, "bill is empty"),
+            TryGetCardsError::CanNotGetCard => write!(f, "can not get card"),
+        }
+    }
+}
+
+impl error::Error for TryGetCardsError {
+    fn description(&self) -> &str {
+        match *self {
+            TryGetCardsError::BillEmpty => "bill is empty",
+            TryGetCardsError::CanNotGetCard => "can not get card",
+        }
+    }
+}
 
 pub struct Game<'a, Card: card::Card + Clone, Board: board::Board<Card>> {
     pub board: &'a mut Board,
@@ -23,14 +49,19 @@ impl<'a, Card: card::Card + Clone, Board: board::Board<Card>> Game<'a, Card, Boa
         Game { board, bill }
     }
 
-    pub fn try_get_cards(&mut self, a: usize, b: usize, c: usize) -> bool {
+    pub fn try_get_cards(&mut self, a: usize, b: usize, c: usize) -> Result<(), TryGetCardsError> {
         if !self.board.try_get_cards(a, b, c) {
-            return false;
+            return Err(TryGetCardsError::CanNotGetCard);
         }
+
+        if self.bill.len() < 3 {
+            return Err(TryGetCardsError::BillEmpty);
+        }
+
         self.board.put_card(a, self.bill.pop().unwrap());
         self.board.put_card(b, self.bill.pop().unwrap());
         self.board.put_card(c, self.bill.pop().unwrap());
 
-        true
+        Ok(())
     }
 }

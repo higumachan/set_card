@@ -80,7 +80,31 @@ mod tests {
                 }
             }
         }
+    }
 
+    #[test]
+    fn game_try_get_cards_errors() {
+        let mut board : StandardBoard<Card3> = StandardBoard::new();
+        let mut game = Game::new(&mut board);
+        game.board.put_card(0, Card3::new(0, 0, 0 ));
+        game.board.put_card(1, Card3::new(0, 0, 0 ));
+        game.board.put_card(2, Card3::new(0, 0, 0 ));
 
+        while (game.bill.pop().is_some()) {}
+        assert!(game.bill.is_empty());
+
+        assert!(match game.try_get_cards(0, 1, 2) {
+            Err(TryGetCardsError::BillEmpty) => true,
+            _ => false,
+        });
+
+        game.board.put_card(0, Card3::new(1, 1, 1 ));
+        game.board.put_card(1, Card3::new(0, 0, 0 ));
+        game.board.put_card(2, Card3::new(0, 0, 0 ));
+
+        assert!(match game.try_get_cards(0, 1, 2) {
+            Err(TryGetCardsError::CanNotGetCard) => true,
+            _ => false,
+        });
     }
 }
